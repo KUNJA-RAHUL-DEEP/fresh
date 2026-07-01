@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilot Mode Premium</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#E86C6C;
+    min-height:100vh;
+    transition:0.5s;
+}
+
+.menu-btn{
+    position:absolute;
+    top:20px;
+    left:20px;
+    font-size:25px;
+    border:none;
+    border-radius:8px;
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.container{
+    text-align:center;
+    padding-top:80px;
+}
+
+.title{
+    color:white;
+    margin-bottom:25px;
+}
+
+.switch{
+    width:70px;
+    height:36px;
+    margin:auto;
+}
+
+.toggle{
+    width:100%;
+    height:100%;
+    background:#ccc;
+    border-radius:30px;
+    cursor:pointer;
+    position:relative;
+    transition:.3s;
+}
+
+.toggle.active{
+    background:#2196F3;
+    box-shadow:0 0 20px rgba(255,255,255,.8);
+}
+
+.toggle-button{
+    width:32px;
+    height:32px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:2px;
+    left:2px;
+    transition:.3s;
+}
+
+.toggle.active .toggle-button{
+    transform:translateX(34px);
+}
+
+.status{
+    margin-top:15px;
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.cards{
+    margin-top:30px;
+}
+
+.card{
+    width:90%;
+    max-width:350px;
+    margin:15px auto;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+    opacity:0;
+    transform:translateY(40px);
+    transition:.5s;
+}
+
+.card.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.value{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    padding:15px 0;
+    box-shadow:0 -3px 10px rgba(0,0,0,.15);
+}
+
+.bottom-nav div{
+    text-align:center;
+    font-size:14px;
+}
+
+.online-indicator{
+    margin-top:10px;
+    color:white;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<button class="menu-btn"
+onclick="location.href='threelines.html'">
+☰
+</button>
+
+<div class="container">
+
+<h1 class="title">PILOT MODE</h1>
+
+<div class="switch">
+    <div class="toggle" onclick="togglePilot()">
+        <div class="toggle-button"></div>
+    </div>
+</div>
+
+<div class="status">OFFLINE</div>
+
+<div class="online-indicator" id="indicator">
+Waiting for pilot...
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>💰 Today's Earnings</h3>
+<div class="value" id="earnings">₹0</div>
+</div>
+
+<div class="card">
+<h3>🚕 Trips Completed</h3>
+<div class="value">8</div>
+</div>
+
+<div class="card">
+<h3>⏱ Online Duration</h3>
+<div class="value" id="timer">00:00:00</div>
+</div>
+
+<div class="card">
+<h3>📍 Current Area</h3>
+<div class="value">Hyderabad</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="bottom-nav">
+<div>🏠<br>Home</div>
+<div>📊<br>Earnings</div>
+<div>🚕<br>Trips</div>
+<div>👤<br>Profile</div>
+</div>
+
+<script>
+
+let seconds=0;
+let timerInterval;
+let earningInterval;
+
+function togglePilot(){
+
+let toggle=document.querySelector(".toggle");
+let status=document.querySelector(".status");
+let cards=document.querySelectorAll(".card");
+let indicator=document.getElementById("indicator");
+
+toggle.classList.toggle("active");
+
+if(toggle.classList.contains("active")){
+
+document.body.style.background="#28a745";
+status.innerHTML="ONLINE";
+indicator.innerHTML="Ready to accept rides";
+
+cards.forEach((card,index)=>{
+setTimeout(()=>{
+card.classList.add("show");
+},index*250);
+});
+
+startTimer();
+animateEarnings();
+
+}
+else{
+
+document.body.style.background="#E86C6C";
+status.innerHTML="OFFLINE";
+indicator.innerHTML="Waiting for pilot...";
+
+cards.forEach(card=>{
+card.classList.remove("show");
+});
+
+clearInterval(timerInterval);
+clearInterval(earningInterval);
+
+seconds=0;
+document.getElementById("timer").innerHTML="00:00:00";
+document.getElementById("earnings").innerHTML="₹0";
+
+}
+
+}
+
+function startTimer(){
+
+timerInterval=setInterval(()=>{
+
+seconds++;
+
+let hrs=Math.floor(seconds/3600);
+let mins=Math.floor((seconds%3600)/60);
+let secs=seconds%60;
+
+document.getElementById("timer").innerHTML=
+String(hrs).padStart(2,'0')+":"+
+String(mins).padStart(2,'0')+":"+
+String(secs).padStart(2,'0');
+
+},1000);
+
+}
+
+function animateEarnings(){
+
+let amount=0;
+
+earningInterval=setInterval(()=>{
+
+if(amount<1250){
+amount+=25;
+document.getElementById("earnings").innerHTML="₹"+amount;
+}
+
+},40);
+
+}
+
+</script>
+
+</body>
+</html>

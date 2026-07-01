@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu</title>
+
+<style>
+body{
+    background:skyblue;
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
+
+.group{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.group button{
+    width:220px;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:#E86C6C;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="group">
+    <button onclick="alert('Profile')">Profile</button>
+    <button onclick="alert('History')">History</button>
+    <button onclick="alert('Payments')">Payments</button>
+    <button onclick="alert('Refer & Earn')">Refer & Earn</button>
+    <button onclick="alert('Insurance')">Insurance</button>
+    <button onclick="alert('Support')">Support</button>
+    <button onclick="alert('About')">About</button>
+</div>
+
+</body>
+</html>
